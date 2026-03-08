@@ -11,6 +11,31 @@ class Trinetra_Discipline:
         # 👇 YEH NAYI LINE ADD KAR DO
         self.current_mode = ""  # Shuru mein mode ekdum khali hai
 
+    # --- FUNCTION 0: PROFILE SETUP & LOCK LOGIC ---
+    def set_profile(self, requested_mode):
+        mode = requested_mode.upper()
+
+        # NAYA RULE: Agar profile pehle se set hai, toh grahak ko bhaga do!
+        if self.current_mode != "":
+            return {
+                "status": "error",
+                "message": f"🔒 STRICT LOCK: Aap pehle hi '{self.current_mode}' set kar chuke hain. Market hours mein rules change karna allowed nahi hai!"
+            }
+
+        # Agar pehli baar aaya hai, toh set karne do
+        if mode == "SCALPER":
+            self.current_max_trades = 3
+            self.current_mode = "SCALPER"
+            return {"status": "success", "message": "✅ Profile Set: SCALPER. Aaj ki Limit: 3 Trades. (Profile Locked 🔒)"}
+            
+        elif mode == "INTRADAY":
+            self.current_max_trades = 2
+            self.current_mode = "INTRADAY"
+            return {"status": "success", "message": "✅ Profile Set: INTRADAY. Aaj ki Limit: 2 Trades. (Profile Locked 🔒)"}
+            
+        else:
+            return {"status": "error", "message": "❌ Galat type! Parchi mein sirf 'SCALPER' ya 'INTRADAY' likho."}
+
     # --- FUNCTION 1: MAIN LOGIC (API Optimized) ---
     def check_trade_logic(self, current_trades, request_bonus_trade=False):
         """
@@ -64,7 +89,7 @@ class Trinetra_Discipline:
                     "allowed": False,
                     "status": "COOLDOWN_AND_PROMPT",
                     "cooldown_seconds": 10, # Frontend 10 second ka timer dikhayega
-                    "message": f"🛑 OVERTRADING ALERT: {self.current_max_trades} trades pure ho gaye. 10 sec cooldown ke baad Bonus trade lenge?"
+                    "message": f"🛑 OVERTRADING ALERT: 10 sec cooldown ke baad Bonus trade lenge?"
                 }
         
         # --- PHASE 3: Error Failsafe ---

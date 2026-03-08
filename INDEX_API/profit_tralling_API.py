@@ -9,7 +9,11 @@ class paisa_nikalo:
         self.current_sl = float(current_sl)    
 
         self.market_lot_sizes = {
-            "NIFTY": 75, "BANKNIFTY": 15, "FINNIFTY": 40, "SENSEX": 10
+            "NIFTY": 65,          # 2026 Updated
+            "BANKNIFTY": 30,      # 2026 Updated
+            "FINNIFTY": 60,       # 2026 Updated
+            "MIDCPNIFTY": 120,    # 2026 Updated
+            "SENSEX": 20          # BSE
         }
         self.index_names = ["NIFTY", "BANKNIFTY", "FINNIFTY", "SENSEX"]
         

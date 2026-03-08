@@ -1,6 +1,5 @@
 from database.db_setup import engine, Base
 # Models ko import karna zaroori hai tabhi Base ko pata chalega ki kya banana hai
-from database.models import TradeRecord 
 
 print("⏳ Neon Cloud par 'trades' table ban rahi hai...")
 
